@@ -114,13 +114,13 @@ function obsForm(){const c=get('cursoObs').value, s=findStudent(c,get('estudiant
 function validateObs(d){if(!d.docente||!d.curso||!d.estudiante||!d.fecha||!d.tipo||!d.categoria||!d.descripcion){alert('Complete docente, curso, estudiante, fecha, tipo, categoría y descripción.');return false}return true}
 function emailText(d){const intro=d.tipo==='Observación general'?'se realizó un registro de seguimiento pedagógico preventivo':'se realizó un registro convivencial de acuerdo con el Manual de Convivencia institucional'; return `Cordial saludo,\n\nPor medio del presente comunicado, le informamos que ${intro}.\n\nEstudiante: ${d.estudiante}\nCurso: ${d.curso}\nFecha: ${d.fecha}\nLugar: ${d.lugar||'No especificado'}\nAsignatura/Espacio: ${d.asignatura||'No especificado'}\nDocente: ${d.docente}\nTipo: ${d.tipo}\nCategoría: ${d.categoria}\n\nDescripción objetiva:\n${d.descripcion}\n\nCompromiso o seguimiento:\n${d.seguimiento||'Pendiente por definir.'}\n\nAgradecemos su acompañamiento al proceso formativo.\n\nAtentamente,\n${d.docente}\nColegio República de China I.E.D.`}
 function updatePreview(){const d=obsForm(); const cls=d.tipo.includes('III')?'red':d.tipo.includes('II')?'amber':d.tipo.includes('I')?'green':'blue'; get('badges').innerHTML=`<span class="chip ${cls}">${escapeHtml(d.tipo||'Sin tipo')}</span><span class="chip">${escapeHtml(d.categoria||'Sin categoría')}</span>`; get('preview').textContent=d.estudiante?emailText(d):'Seleccione un estudiante para generar la vista previa.'}
-function saveObservation(){const d=obsForm(); if(!validateObs(d))return; const list=observations(); list.unshift(d); saveObsList(list); toast('Observación guardada.'); renderHistory(); updateMetrics(); onStudentObs();}
+function saveObservation(){const d=obsForm(); if(!validateObs(d))return; const list=observations(); list.unshift(d); saveObsList(list); syncObservationToSupabase(d); toast('Observación guardada.'); renderHistory(); updateMetrics(); onStudentObs();}
 function sendEmail(){const d=obsForm(); if(!validateObs(d))return; if(!d.correo){alert('El estudiante no tiene correo registrado. Escríbalo antes de enviar.');return} postToBackend({...d,action:'observation',emailText:emailText(d)});}
 function sendWhatsApp(){const d=obsForm(); if(!validateObs(d))return; if(!d.telefono){alert('El estudiante no tiene teléfono registrado. Escríbalo antes de enviar WhatsApp.');return} submitBackendWindow({...d,action:'whatsapp',message:emailText(d)});}
 function clearObs(){['docente','estudianteObs','asignatura','lugar','correoObs','telefonoObs','descripcionObs','seguimientoObs'].forEach(id=>get(id).value=''); get('fechaObs').value=today(); get('tipoObs').value='Observación general'; loadCategories(); onStudentObs();}
 function countObs(n){return observations().filter(o=>o.estudiante===n).length} function risk(n){const c=countObs(n); return c>=3?3:c===2?2:c===1?1:0}
-function renderHistory(){const q=norm(get('buscarHistorial')?.value||''), f=get('filtroHistorial')?.value||''; const list=observations().filter(o=>(!f||o.tipo===f)&&norm(JSON.stringify(o)).includes(q)); get('historyList').innerHTML=list.length?list.map(o=>`<article class="record"><div><strong>${o.fecha} | ${escapeHtml(o.estudiante)} | Curso ${o.curso}</strong><p>${escapeHtml(o.descripcion)}</p><div class="meta"><span class="chip blue">${escapeHtml(o.tipo)}</span><span class="chip">${escapeHtml(o.categoria)}</span><span class="chip">${escapeHtml(o.docente||'Sin docente')}</span></div></div><button class="btn btn-ghost btn-small" onclick="openObs(${o.id})">Abrir</button></article>`).join(''):'<div class="empty">No hay registros con esos criterios.</div>';}
-function openObs(id){const o=observations().find(x=>x.id===id); if(!o)return; showView('observador'); get('cursoObs').value=o.curso; loadStudents('obs'); get('docente').value=o.docente||''; get('fechaObs').value=o.fecha||today(); get('estudianteObs').value=o.estudiante||''; get('asignatura').value=o.asignatura||''; get('lugar').value=o.lugar||''; get('correoObs').value=o.correo||''; get('telefonoObs').value=o.telefono||''; get('tipoObs').value=CATEGORIES[o.tipo]?o.tipo:'Observación general'; loadCategories(); get('categoriaObs').value=CATEGORIES[o.tipo]?o.categoria:''; get('descripcionObs').value=o.descripcion||''; get('seguimientoObs').value=o.seguimiento||''; onStudentObs();}
+function renderHistory(){const box=get('historyList'); if(!box)return; const q=norm(get('buscarHistorial')?.value||''), f=get('filtroHistorial')?.value||''; const list=observations().filter(o=>(!f||o.tipo===f)&&norm(JSON.stringify(o)).includes(q)); box.innerHTML=list.length?list.map(o=>`<article class="record"><div><strong>${escapeHtml(o.fecha)} | ${escapeHtml(o.estudiante)} | Curso ${escapeHtml(o.curso)}</strong><p>${escapeHtml(o.descripcion)}</p><div class="meta"><span class="chip blue">${escapeHtml(o.tipo)}</span><span class="chip">${escapeHtml(o.categoria)}</span><span class="chip">${escapeHtml(o.docente||'Sin docente')}</span></div></div><button class="btn btn-ghost btn-small" onclick="openObs('${escapeJs(o.id)}')">Abrir</button></article>`).join(''):'<div class="empty">No hay registros con esos criterios. Cuando guardes una observación aparecerá aquí.</div>';}
+function openObs(id){const o=observations().find(x=>String(x.id)===String(id)); if(!o)return; showView('observador'); get('cursoObs').value=o.curso; loadStudents('obs'); get('docente').value=o.docente||''; get('fechaObs').value=o.fecha||today(); get('estudianteObs').value=o.estudiante||''; get('asignatura').value=o.asignatura||''; get('lugar').value=o.lugar||''; get('correoObs').value=o.correo||''; get('telefonoObs').value=o.telefono||''; get('tipoObs').value=CATEGORIES[o.tipo]?o.tipo:'Observación general'; loadCategories(); get('categoriaObs').value=CATEGORIES[o.tipo]?o.categoria:''; get('descripcionObs').value=o.descripcion||''; get('seguimientoObs').value=o.seguimiento||''; onStudentObs();}
 function clearHistory(){if(confirm('¿Desea borrar el historial local del observador?')){localStorage.removeItem(STORAGE_OBS);renderHistory();updateMetrics();}}
 let attendanceMonthExtra=0, attendanceMode='sheet';
 
@@ -155,6 +155,7 @@ async function loadSupabaseData(pin){
     const attResult=await supabaseRpc('obtener_asistencia',{p_pin:pin});
     if(attResult&&attResult.ok!==false&&attResult.asistencia){attendanceCache=attResult.asistencia; localStorage.setItem(STORAGE_ATT,JSON.stringify(attendanceCache));}
   }catch(err){console.warn('No se pudo cargar asistencia de Supabase',err)}
+  await loadSupabaseObservations(pin);
   renderAttendance();
   renderStudents();
   renderHistory();
@@ -182,6 +183,29 @@ async function syncAttendanceToSupabase(c,n,d,record){
     const result=await supabaseRpc('guardar_asistencia',{p_pin:pin,p_record:payload});
     if(result&&result.ok===false)toast(result.error||'No se guardo la asistencia en Supabase.');
   }catch(err){toast('Asistencia local. No se pudo sincronizar con Supabase.')}
+}
+async function loadSupabaseObservations(pin){
+  if(!pin||!supabaseReady())return;
+  try{
+    const result=await supabaseRpc('obtener_observaciones',{p_pin:pin});
+    if(result&&result.ok!==false&&Array.isArray(result.observaciones)){
+      saveObsList(result.observaciones);
+      renderHistory();
+      updateMetrics();
+    }
+  }catch(err){console.warn('No se pudo cargar historial de Supabase',err)}
+}
+async function syncObservationToSupabase(record){
+  const pin=teacherPin(); if(!pin||!supabaseReady())return;
+  try{
+    const result=await supabaseRpc('guardar_observacion',{p_pin:pin,p_record:record});
+    if(result&&result.ok===false)toast(result.error||'No se guardo el historial en Supabase.');
+    if(result&&result.id){
+      const list=observations();
+      const item=list.find(o=>String(o.id)===String(record.id));
+      if(item){item.id=result.id; saveObsList(list);}
+    }
+  }catch(err){toast('Observación local. No se pudo sincronizar con Supabase.')}
 }
 function teacherPin(){return sessionStorage.getItem(STORAGE_PIN)||''}
 function teacherName(){return sessionStorage.getItem(STORAGE_TEACHER)||TEACHER_BY_PIN[teacherPin()]||''}
@@ -252,7 +276,7 @@ function exportCSV(name, headers, rows){const csv='\ufeff'+headers.join(',')+'\n
 function exportStudentsCSV(){exportCSV('estudiantes_crc.csv',['curso','num','nombre','acudiente','parentesco','correo','telefono','discapacidad','apoyo','direccion','convive'],allStudents())} function exportObservationsCSV(){exportCSV('observador_crc.csv',['fecha','curso','estudiante','docente','tipo','categoria','correo','telefono','descripcion','seguimiento'],observations())}
 function exportAttendanceCSV(){const c=activeCourse, selected=get('fechaAsis').value, dates=window.innerWidth<=720?[selected]:weekdayDatesFrom(selected), rows=[]; (students[c]||[]).forEach(s=>dates.forEach(d=>{const r=getAtt(c,s.nombre,d); rows.push({fecha:d,curso:c,num:s.num,nombre:s.nombre,asistencia:r.a,uniforme:r.u,correo:s.correo,acudiente:s.acudiente})})); exportCSV(`asistencia_${c}_${selected}.csv`,['fecha','curso','num','nombre','asistencia','uniforme','correo','acudiente'],rows)}
 function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))} function escapeJs(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")} function toast(msg){const t=get('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(window._toast); window._toast=setTimeout(()=>t.classList.remove('show'),2600)}
-document.addEventListener('DOMContentLoaded',()=>{loadStudentsData(); get('fechaObs').value=today(); get('fechaAsis').value=today(); populateSelects(); loadCategories(); updatePreview(); renderStudentsMini(); renderAttendance(); clearStudentEditor(); installWhatsAppButton(); updateTeacherWelcome(); if(teacherPin())loadSupabaseData(teacherPin()).catch(()=>toast('No se pudo actualizar desde Supabase. Se muestra la copia local.')); ensureTeacherSession();});
+document.addEventListener('DOMContentLoaded',()=>{loadStudentsData(); get('fechaObs').value=today(); get('fechaAsis').value=today(); populateSelects(); loadCategories(); updatePreview(); renderStudentsMini(); renderAttendance(); renderHistory(); clearStudentEditor(); installWhatsAppButton(); updateTeacherWelcome(); if(teacherPin())loadSupabaseData(teacherPin()).catch(()=>toast('No se pudo actualizar desde Supabase. Se muestra la copia local.')); ensureTeacherSession();});
 </script>
 </body>
 </html>
