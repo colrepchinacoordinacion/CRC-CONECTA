@@ -1,0 +1,11 @@
+# Copias y archivos temporales locales
+index.backup-*.html
+index_crc_conecta_estudiantes_actualizados.html
+preview_movil_*.png
+render_mobile_preview.py
+resumen_*.json
+
+# Carpetas internas de trabajo
+.agents/
+.codex/
+
