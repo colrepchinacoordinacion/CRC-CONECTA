@@ -122,7 +122,7 @@ const STORAGE_STUDENTS='crcIntegratedStudents', STORAGE_OBS='crcIntegratedObserv
 const TEACHER_BY_PIN={'1234':'SUAREZ GOMEZ JUAN CARLOS','5678':'GOMEZ URREGO JUAN FRANCISCO'};
 const VIEWS={dashboard:['Dashboard institucional','Indicadores generales y estado de integración de CRC Conecta.'],estudiantes:['Estudiantes y acudientes','Base de estudiantes, correos, teléfonos y apoyos.'],observador:['Observador de comportamiento','Registro convivencial, seguimiento y comunicación al acudiente.'],asistencia:['Asistencia diaria','Control de asistencia y uniforme conectado con la misma base de estudiantes.'],seguimiento:['Seguimiento académico','Registro grupal de estudiantes con desempeño bajo por periodo y asignatura.'],historialSeguimiento:['Historial de seguimiento académico','Consulta consolidada por curso, periodo, estudiante y asignatura.'],historial:['Historial de observaciones','Búsqueda, revisión y exportación de registros convivenciales.']};
 const CATEGORIES={'Observación general':['Reconocimiento positivo','Seguimiento académico','No trae materiales o útiles requeridos','Incumple tareas o actividades','Interrumpe reiteradamente la clase','Uso de celular sin autorización','Llega tarde al aula o actividad','Uniforme incompleto o inadecuado','Comunicación con familia'], 'Situación Tipo I':['Conflicto manejado inadecuadamente','Agresión verbal','Agresión gestual','Agresión relacional','Agresión electrónica esporádica','Uso de vocabulario soez o apodos','Daño de pertenencias','Irrespeto a integrante de la comunidad']};
-const ACADEMIC_SUBJECTS=['FÍSICA','QUÍMICA','MATEMÁTICAS','TECNOLOGÍA E INFORMÁTICA','INGLÉS','ESPAÑOL','FILOSOFÍA','ARTES','EDUCACIÓN FÍSICA','ÉTICA Y RELIGIÓN','CIENCIAS POLÍTICAS Y ECONÓMICAS','CIENCIAS INTEGRADAS'];
+const ACADEMIC_SUBJECTS=['FÍSICA','QUÍMICA','MATEMÁTICAS','TECNOLOGÍA E INFORMÁTICA','INGLÉS','ESPAÑOL','FILOSOFÍA','ARTES','EDUCACIÓN FÍSICA','ÉTICA Y RELIGIÓN','CIENCIAS POLÍTICAS Y ECONÓMICAS','CIENCIAS NATURALES','CIENCIAS SOCIALES','EMPRENDIMIENTO','CIENCIAS INTEGRADAS'];
 let followupHistory={resumen:[],detalle:[]};
 let students={}, activeCourse='', selectedStudentKey='';
 function get(id){return document.getElementById(id)} function today(){return new Date().toISOString().split('T')[0]} function norm(t){return String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/gi,' ').trim().toUpperCase()}
@@ -376,3 +376,4 @@ document.addEventListener('DOMContentLoaded',()=>{loadStudentsData(); get('fecha
 </script>
 </body>
 </html>
+
