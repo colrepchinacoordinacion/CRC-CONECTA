@@ -41,6 +41,58 @@ body[data-view="asistencia"] .metrics{display:none}body[data-view="asistencia"] 
 .followup-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}.followup-summary .metric{box-shadow:none;padding:12px}
 .followup-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff;max-height:560px}.followup-table-wrap td{vertical-align:top}
 @media(max-width:720px){.followup-row{grid-template-columns:auto minmax(0,1fr)}.followup-contact{grid-column:2;text-align:left;max-width:none}.followup-summary{grid-template-columns:1fr}}
+/* CRC Conecta 2.0 - estilo azul institucional */
+body{background:linear-gradient(180deg,#f7fbff 0,#edf5ff 48%,#eaf2fb 100%)}
+.shell{background:radial-gradient(circle at 70% 0,rgba(59,130,246,.08),transparent 34%)}
+.sidebar{background:linear-gradient(180deg,#0b4f86 0,#0a3765 46%,#08213e 100%);box-shadow:inset -1px 0 rgba(255,255,255,.1),12px 0 34px rgba(8,33,62,.08)}
+.brand-mark{background:linear-gradient(135deg,#38bdf8,#1d4ed8)}
+.brand .logo{box-shadow:0 12px 26px rgba(29,78,216,.25)}
+.nav button{color:#dcecff}
+.nav button.active,.nav button:hover{background:rgba(255,255,255,.16);box-shadow:inset 3px 0 #7dd3fc}
+.nav .ico{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;font-size:15px;font-weight:900;background:#e0f2fe;color:#0369a1;box-shadow:0 8px 18px rgba(8,47,95,.18)}
+.nav .ico-dashboard{background:#dbeafe;color:#1d4ed8}
+.nav .ico-students{background:#dcfce7;color:#15803d}
+.nav .ico-observer{background:#fef3c7;color:#b45309}
+.nav .ico-attendance{background:#e0f2fe;color:#0369a1}
+.nav .ico-followup{background:#f3e8ff;color:#7e22ce}
+.nav .ico-history-followup{background:#fee2e2;color:#b91c1c}
+.nav .ico-history{background:#e2e8f0;color:#334155}
+.side-select label{color:#b9d7f4}
+.topbar{background:linear-gradient(90deg,#0f5f97 0,#1678b5 52%,#1d8ac6 100%);backdrop-filter:blur(14px);box-shadow:0 10px 28px rgba(30,64,175,.16)}
+.topbar h2{color:#fff}
+.topbar p{color:#dcefff}
+.topbar .btn-ghost{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.26);color:#fff}
+.topbar .btn-primary{background:#fff;color:#0b4f86;box-shadow:0 8px 20px rgba(8,47,95,.16)}
+.topbar .teacher-welcome{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.28);color:#fff}
+.panel-head h3,.metric strong{color:#082f5f}
+.container{background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0))}
+.panel,.metric,.record,.student-list,.followup-list,.followup-table-wrap,.att-table-wrap{border-color:#d8e7f7;box-shadow:0 12px 30px rgba(30,64,175,.08)}
+.panel-head{background:linear-gradient(180deg,#fff,#f7fbff)}
+.panel-body{background:linear-gradient(180deg,#fff,#fbfdff)}
+.metric{background:linear-gradient(180deg,#fff,#f8fbff)}
+.record:hover,.followup-row:hover{border-color:#9fc6ee;box-shadow:0 12px 24px rgba(30,64,175,.1)}
+select,input,textarea{border-color:#cfe0f2;background:#fff}
+select:focus,input:focus,textarea:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.16)}
+.btn{box-shadow:0 2px 0 rgba(30,64,175,.05)}
+.btn-primary{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
+.btn-success{background:linear-gradient(135deg,#0284c7,#0369a1)}
+.btn-ghost{background:#f2f7fd;border:1px solid #cfe0f2;color:#0b3f70}
+.teacher-welcome{background:#eaf4ff;border-color:#b8d7f6;color:#0b3f70}
+.chip{background:#f7fbff;border-color:#d8e7f7}
+.att-tabs{background:#f7fbff}
+.att-tabs button.active{color:#0b4f86;border-bottom-color:#2563eb}
+.desktop-attendance-table thead .sticky-num,.desktop-attendance-table thead .sticky-name,th{background:#e7f1fc;color:#24496f}
+.student-strip{background:#edf7ff;border-color:#bdd8f4}
+.preview,.empty{background:#f8fbff}
+@media(max-width:720px){
+  body{background:#edf6ff}
+  .sidebar{background:linear-gradient(180deg,#0b5f9d,#0a3b68 60%,#08213e)}
+  .panel{box-shadow:0 8px 22px rgba(30,64,175,.08)}
+  .mobile-menu-btn{background:#e7f1fc;color:#0b4f86}
+  .nav .ico{display:none}
+  .mobile-att-card{border-color:#cfe0f2;box-shadow:0 8px 20px rgba(30,64,175,.08)}
+  .topbar{background:linear-gradient(90deg,#0f5f97,#1678b5);backdrop-filter:none}
+}
 </style>
 
 </head>
@@ -53,13 +105,13 @@ body[data-view="asistencia"] .metrics{display:none}body[data-view="asistencia"] 
       <div><h1>CRC Conecta</h1><p>Colegio República de China I.E.D.</p></div>
     </div>
     <nav class="nav" aria-label="Módulos">
-      <button data-view="dashboard" onclick="showView('dashboard')"><span class="ico">D</span> Dashboard</button>
-      <button data-view="estudiantes" onclick="showView('estudiantes')"><span class="ico">E</span> Estudiantes</button>
-      <button data-view="observador" onclick="showView('observador')"><span class="ico">O</span> Observador</button>
-      <button class="active" data-view="asistencia" onclick="showView('asistencia')"><span class="ico">A</span> Asistencia</button>
-      <button data-view="seguimiento" onclick="showView('seguimiento')"><span class="ico">S</span> Seguimiento académico</button>
-      <button data-view="historialSeguimiento" onclick="showView('historialSeguimiento')"><span class="ico">R</span> Historial seguimiento</button>
-      <button data-view="historial" onclick="showView('historial')"><span class="ico">H</span> Historial</button>
+      <button data-view="dashboard" onclick="showView('dashboard')"><span class="ico ico-dashboard">▦</span> Dashboard</button>
+      <button data-view="estudiantes" onclick="showView('estudiantes')"><span class="ico ico-students">◎</span> Estudiantes</button>
+      <button data-view="observador" onclick="showView('observador')"><span class="ico ico-observer">✎</span> Observador</button>
+      <button class="active" data-view="asistencia" onclick="showView('asistencia')"><span class="ico ico-attendance">✓</span> Asistencia</button>
+      <button data-view="seguimiento" onclick="showView('seguimiento')"><span class="ico ico-followup">◆</span> Seguimiento académico</button>
+      <button data-view="historialSeguimiento" onclick="showView('historialSeguimiento')"><span class="ico ico-history-followup">↗</span> Historial seguimiento</button>
+      <button data-view="historial" onclick="showView('historial')"><span class="ico ico-history">◷</span> Historial</button>
     </nav>
     <div class="side-select"><label for="cursoGlobal">Curso activo</label><select id="cursoGlobal" onchange="setCurso(this.value)"></select><input id="sideSearch" placeholder="Buscar estudiante" oninput="renderStudentsMini()"></div>
     <div id="miniStudents" class="student-list"></div>
@@ -70,7 +122,7 @@ body[data-view="asistencia"] .metrics{display:none}body[data-view="asistencia"] 
     <main class="container">
 
       <section id="dashboard" class="view"><section class="panel"><div class="panel-head"><div><h3>Dashboard institucional</h3><p>Vista preparada para consolidar indicadores de asistencia, observador, seguimiento académico y comunicaciones.</p></div></div><div class="panel-body"><div class="metric-grid"><div class="metric"><span>Estudiantes</span><strong id="dashStudents">-</strong><small>Base institucional</small></div><div class="metric"><span>Cursos</span><strong id="dashCourses">-</strong><small>Grupos activos</small></div><div class="metric"><span>Observaciones</span><strong id="dashObs">-</strong><small>Registros cargados</small></div><div class="metric"><span>Notificaciones</span><strong>notify</strong><small>Correo activo, WhatsApp preparado</small></div></div></div></section></section>
-      <section id="observador" class="view"><div class="layout"><section class="panel"><div class="panel-head"><div><h3>Registrar observación</h3><p>El correo al acudiente se arma automáticamente con los datos institucionales.</p></div></div><div class="panel-body"><div class="grid"><div><label for="fechaObs">Fecha</label><input type="date" id="fechaObs" onchange="updatePreview()"></div><div><label for="cursoObs">Curso</label><select id="cursoObs" onchange="loadStudents('obs')"></select></div><div><label for="estudianteObs">Estudiante</label><select id="estudianteObs" onchange="onStudentObs()"></select></div><div class="full"><div id="studentInfo" class="student-strip"></div></div><div><label for="asignatura">Asignatura / espacio</label><input id="asignatura" placeholder="Matemáticas, descanso..." oninput="updatePreview()"></div><div><label for="lugar">Lugar</label><input id="lugar" placeholder="Aula, patio, pasillo..." oninput="updatePreview()"></div><div><label for="tipoObs">Tipo</label><select id="tipoObs" onchange="loadCategories();updatePreview()"><option value="Observación general">Observación general</option><option value="Situación Tipo I">Situación Tipo I</option></select></div><div><label for="categoriaObs">Categoría</label><select id="categoriaObs" onchange="updatePreview()"></select></div><div><label for="correoObs">Correo acudiente</label><input id="correoObs" type="email" placeholder="correo@ejemplo.com" oninput="updatePreview()"></div><div><label for="telefonoObs">Teléfono</label><input id="telefonoObs" placeholder="Whatsapp" oninput="updatePreview()"></div><div class="full"><label for="descripcionObs">Descripción objetiva</label><textarea id="descripcionObs" placeholder="Describa los hechos de manera objetiva." oninput="updatePreview()"></textarea></div><div class="full"><label for="descargosObs">Descargos</label><textarea id="descargosObs" placeholder="Escriba la versión del estudiante frente a la situación." oninput="updatePreview()"></textarea></div><div class="full"><label for="seguimientoObs">Compromiso o seguimiento</label><textarea id="seguimientoObs" placeholder="Compromisos, acuerdos o remisiones." oninput="updatePreview()"></textarea></div></div><div class="actions"><button class="btn btn-primary" onclick="saveObservation()">Guardar observación</button><button class="btn btn-success" onclick="sendEmail()">Reintentar correo</button><button class="btn btn-ghost" onclick="clearObs()">Limpiar</button></div></div></section><aside class="panel"><div class="panel-head"><div><h3>Vista previa</h3><p>Mensaje listo para el acudiente.</p></div></div><div class="panel-body"><div id="badges" class="chips"></div><div id="preview" class="preview">Seleccione un estudiante para generar la vista previa.</div></div></aside></div></section>
+      <section id="observador" class="view"><div class="layout"><section class="panel"><div class="panel-head"><div><h3>Registrar observación</h3><p>El correo al acudiente se arma automáticamente con los datos institucionales.</p></div></div><div class="panel-body"><div class="grid"><div><label for="fechaObs">Fecha</label><input type="date" id="fechaObs" onchange="updatePreview()"></div><div><label for="cursoObs">Curso</label><select id="cursoObs" onchange="loadStudents('obs')"></select></div><div><label for="estudianteObs">Estudiante</label><select id="estudianteObs" onchange="onStudentObs()"></select></div><div class="full"><div id="studentInfo" class="student-strip"></div></div><div><label for="asignatura">Asignatura / espacio</label><input id="asignatura" placeholder="Matemáticas, descanso..." oninput="updatePreview()"></div><div><label for="lugar">Lugar</label><input id="lugar" placeholder="Aula, patio, pasillo..." oninput="updatePreview()"></div><div><label for="tipoObs">Tipo</label><select id="tipoObs" onchange="loadCategories();updatePreview()"><option value="Observación general">Observación general</option><option value="Situación Tipo I">Situación Tipo I</option></select></div><div><label for="categoriaObs">Categoría</label><select id="categoriaObs" onchange="updatePreview()"></select></div><div><label for="correoObs">Correo acudiente</label><input id="correoObs" type="email" placeholder="correo@ejemplo.com" oninput="updatePreview()"></div><div><label for="telefonoObs">Teléfono</label><input id="telefonoObs" placeholder="Whatsapp" oninput="updatePreview()"></div><div class="full"><label for="descripcionObs">Descripción objetiva</label><textarea id="descripcionObs" placeholder="Describa los hechos de manera objetiva." oninput="updatePreview()"></textarea></div><div class="full"><label for="descargosObs">Descargos</label><textarea id="descargosObs" placeholder="Escriba la versión del estudiante frente a la situación." oninput="updatePreview()"></textarea></div><div class="full"><label for="seguimientoObs">Compromiso o seguimiento</label><textarea id="seguimientoObs" placeholder="Compromisos, acuerdos o remisiones." oninput="updatePreview()"></textarea></div></div><div class="actions"><button class="btn btn-primary" onclick="saveObservation()">Guardar observación</button><button class="btn btn-success" onclick="sendEmail()">Enviar correo</button><button class="btn btn-ghost" onclick="clearObs()">Limpiar</button></div></div></section><aside class="panel"><div class="panel-head"><div><h3>Vista previa</h3><p>Mensaje listo para el acudiente.</p></div></div><div class="panel-body"><div id="badges" class="chips"></div><div id="preview" class="preview">Seleccione un estudiante para generar la vista previa.</div></div></aside></div></section>
       <section id="asistencia" class="view active"><section class="panel"><div class="panel-head"><div><h3>Asistencia diaria</h3><p>Registra asistencia y uniforme por curso. Cada cambio queda guardado en este navegador.</p></div><div class="actions" style="margin-top:0"><button class="btn btn-success btn-small" onclick="openStudentModal()">Añadir estudiante</button><button class="btn btn-ghost btn-small" onclick="markAllPresent()">Todos asisten</button><button class="btn btn-ghost btn-small" onclick="addAttendanceMonth()">+ Mes</button><button class="btn btn-primary btn-small" onclick="exportAttendanceCSV()">Exportar curso</button></div></div><div class="panel-body"><div class="att-tabs"><button id="tabAttendanceSheet" class="active" onclick="setAttendanceMode(&quot;sheet&quot;)">Asistencia</button><button id="tabAttendanceStats" onclick="setAttendanceMode(&quot;stats&quot;)">Estadísticas</button></div><div id="attendanceSheetPane" class="att-pane"><div class="att-head"><div class="grid"><div><label for="cursoAsis">Curso</label><select id="cursoAsis" onchange="setCurso(this.value)"></select></div><div><label for="fechaAsis">Fecha</label><input type="date" id="fechaAsis" onchange="renderAttendance()"></div></div><div class="chips"><span class="chip green">Asiste</span><span class="chip red">No asiste</span><span class="chip amber">Tarde</span><span class="chip blue">Excusa</span><span class="chip purple">Uniforme</span></div></div><div id="attendanceTable" class="att-table-wrap"></div></div><div id="attendanceStatsPane" class="att-pane hidden"><div id="attendanceStats" class="attendance-stats"></div></div></div></section></section>
       <section id="historial" class="view"><section class="panel"><div class="panel-head"><div><h3>Historial del observador</h3><p>Consulta, abre y exporta registros convivenciales.</p></div></div><div class="panel-body"><div class="toolbar"><div><label for="buscarHistorial">Buscar</label><input id="buscarHistorial" placeholder="Estudiante, docente, fecha..." oninput="renderHistory()"></div><div><label for="filtroHistorial">Tipo</label><select id="filtroHistorial" onchange="renderHistory()"><option value="">Todos</option><option>Observación general</option><option>Situación Tipo I</option></select></div><button class="btn btn-ghost" onclick="exportObservationsCSV()">Exportar CSV</button><button class="btn btn-danger" onclick="clearHistory()">Borrar historial</button></div><div id="historyList" class="record-list"></div></div></section></section>
       <section id="seguimiento" class="view">
@@ -82,7 +134,6 @@ body[data-view="asistencia"] .metrics{display:none}body[data-view="asistencia"] 
               <div><label for="segAsignatura">Asignatura</label><select id="segAsignatura"><option value="">Seleccione asignatura</option></select></div>
               <div><label for="segCurso">Curso</label><select id="segCurso" onchange="renderFollowupStudents()"></select></div>
               <div><label>Docente identificado</label><input id="segDocente" readonly placeholder="Ingrese con su PIN"></div>
-              <div class="full"><label for="segRecomendacion">Recomendación institucional</label><textarea id="segRecomendacion">Agradecemos realizar el acompañamiento correspondiente y comunicarse con el docente de la asignatura para conocer las actividades de mejoramiento.</textarea></div>
             </div>
             <div class="actions"><button class="btn btn-ghost btn-small" onclick="toggleAllFollowup(true)">Marcar todos</button><button class="btn btn-ghost btn-small" onclick="toggleAllFollowup(false)">Desmarcar todos</button><span id="segSelectedCount" class="chip blue">0 seleccionados</span></div>
             <div id="segStudentList" class="followup-list"><div class="empty">Selecciona un curso.</div></div>
@@ -118,7 +169,8 @@ const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxZrLqEU60VW3fgTD
 const SUPABASE_URL='https://atyfkvlpsgtnvvgfubff.supabase.co';
 const SUPABASE_KEY='sb_publishable_Zvryu5yotOeNrG4sVfTD4A_JBgRkmlq';
 const NOTIFY_FUNCTION_URL=SUPABASE_URL+'/functions/v1/notify';
-const STORAGE_STUDENTS='crcIntegratedStudents', STORAGE_OBS='crcIntegratedObservations', STORAGE_ATT='crcIntegratedAttendance', STORAGE_PIN='crcTeacherPin', STORAGE_TEACHER='crcTeacherName';
+const STORAGE_STUDENTS='crcIntegratedStudents', STORAGE_OBS='crcIntegratedObservations', STORAGE_ATT='crcIntegratedAttendance', STORAGE_PIN='crcTeacherPin', STORAGE_TEACHER='crcTeacherName', STORAGE_TEACHER_TIME='crcTeacherTime';
+const TEACHER_IDLE_LIMIT=60*60*1000;
 const TEACHER_BY_PIN={'1234':'SUAREZ GOMEZ JUAN CARLOS','5678':'GOMEZ URREGO JUAN FRANCISCO'};
 const VIEWS={dashboard:['Dashboard institucional','Indicadores generales y estado de integración de CRC Conecta.'],estudiantes:['Estudiantes y acudientes','Base de estudiantes, correos, teléfonos y apoyos.'],observador:['Observador de comportamiento','Registro convivencial, seguimiento y comunicación al acudiente.'],asistencia:['Asistencia diaria','Control de asistencia y uniforme conectado con la misma base de estudiantes.'],seguimiento:['Seguimiento académico','Registro grupal de estudiantes con desempeño bajo por periodo y asignatura.'],historialSeguimiento:['Historial de seguimiento académico','Consulta consolidada por curso, periodo, estudiante y asignatura.'],historial:['Historial de observaciones','Búsqueda, revisión y exportación de registros convivenciales.']};
 const CATEGORIES={'Observación general':['Reconocimiento positivo','Seguimiento académico','No trae materiales o útiles requeridos','Incumple tareas o actividades','Interrumpe reiteradamente la clase','Uso de celular sin autorización','Llega tarde al aula o actividad','Uniforme incompleto o inadecuado','Comunicación con familia'], 'Situación Tipo I':['Conflicto manejado inadecuadamente','Agresión verbal','Agresión gestual','Agresión relacional','Agresión electrónica esporádica','Uso de vocabulario soez o apodos','Daño de pertenencias','Irrespeto a integrante de la comunidad']};
@@ -162,8 +214,8 @@ function validateObs(d){if(!teacherPin()){alert('Primero identifíquese con su P
 function emailText(d){const intro=d.tipo==='Observación general'?'se realizó un registro de seguimiento pedagógico preventivo':'se realizó un registro convivencial de acuerdo con el Manual de Convivencia institucional'; return `Cordial saludo,\n\nPor medio del presente comunicado, le informamos que ${intro}.\n\nEstudiante: ${d.estudiante}\nCurso: ${d.curso}\nFecha: ${d.fecha}\nLugar: ${d.lugar||'No especificado'}\nAsignatura/Espacio: ${d.asignatura||'No especificado'}\nDocente: ${d.docente}\nTipo: ${d.tipo}\nCategoría: ${d.categoria}\n\nDescripción objetiva:\n${d.descripcion}\n\nDescargos del estudiante:\n${d.descargos||'No se registran descargos.'}\n\nCompromiso o seguimiento:\n${d.seguimiento||'Pendiente por definir.'}\n\nAgradecemos su acompañamiento al proceso formativo.\n\nAtentamente,\n${d.docente}\nColegio República de China I.E.D.`}
 function updatePreview(){const d=obsForm(); const cls=d.tipo.includes('III')?'red':d.tipo.includes('II')?'amber':d.tipo.includes('I')?'green':'blue'; get('badges').innerHTML=`<span class="chip ${cls}">${escapeHtml(d.tipo||'Sin tipo')}</span><span class="chip">${escapeHtml(d.categoria||'Sin categoría')}</span>`; get('preview').textContent=d.estudiante?emailText(d):'Seleccione un estudiante para generar la vista previa.'}
 function saveObservation(){const d=obsForm(); if(!validateObs(d))return; const list=observations(); list.unshift(d); saveObsList(list); syncObservationToSupabase(d); renderHistory(); updateMetrics(); onStudentObs();}
-function sendEmail(){const d=obsForm(); if(!validateObs(d))return; if(!d.correo){alert('El estudiante no tiene correo registrado. Escríbalo antes de enviar.');return} notifyBackend('observation',d,'email').then(r=>toast(r.message||'Reintento de correo enviado.')).catch(err=>toast(err.message||'No se pudo reintentar el correo.'));}
-function sendWhatsApp(){const d=obsForm(); if(!validateObs(d))return; if(!d.telefono){alert('El estudiante no tiene teléfono registrado. Escríbalo antes de enviar WhatsApp.');return} notifyBackend('observation',d,'whatsapp').then(r=>toast(r.message||'Reintento de WhatsApp enviado.')).catch(err=>toast(err.message||'No se pudo reintentar WhatsApp.'));}
+function sendEmail(){const d=obsForm(); if(!validateObs(d))return; if(!d.correo){alert('El estudiante no tiene correo registrado. Escríbalo antes de enviar.');return} notifyBackend('observation',d,'email').then(r=>toast(r.message||'Correo enviado nuevamente.')).catch(err=>toast(err.message||'No se pudo enviar nuevamente el correo.'));}
+function sendWhatsApp(){const d=obsForm(); if(!validateObs(d))return; if(!d.telefono){alert('El estudiante no tiene teléfono registrado. Escríbalo antes de enviar WhatsApp.');return} notifyBackend('observation',d,'whatsapp').then(r=>toast(r.message||'WhatsApp enviado nuevamente.')).catch(err=>toast(err.message||'No se pudo enviar nuevamente el WhatsApp.'));}
 function clearObs(){['estudianteObs','asignatura','lugar','correoObs','telefonoObs','descripcionObs','descargosObs','seguimientoObs'].forEach(id=>get(id).value=''); get('fechaObs').value=today(); get('tipoObs').value='Observación general'; loadCategories(); onStudentObs();}
 function countObs(n){return observations().filter(o=>o.estudiante===n).length} function risk(n){const c=countObs(n); return c>=3?3:c===2?2:c===1?1:0}
 function renderHistory(){const box=get('historyList'); if(!box)return; const q=norm(get('buscarHistorial')?.value||''), f=get('filtroHistorial')?.value||''; const list=observations().filter(o=>(!f||o.tipo===f)&&norm(JSON.stringify(o)).includes(q)); box.innerHTML=list.length?list.map(o=>`<article class="record"><div><strong>${escapeHtml(o.fecha)} | ${escapeHtml(o.estudiante)} | Curso ${escapeHtml(o.curso)}</strong><p>${escapeHtml(o.descripcion)}</p><div class="meta"><span class="chip blue">${escapeHtml(o.tipo)}</span><span class="chip">${escapeHtml(o.categoria)}</span><span class="chip">${escapeHtml(o.docente||'Sin docente')}</span></div></div><button class="btn btn-ghost btn-small" onclick="openObs('${escapeJs(o.id)}')">Abrir</button></article>`).join(''):'<div class="empty">No hay registros con esos criterios. Cuando guardes una observación aparecerá aquí.</div>';}
@@ -248,6 +300,7 @@ async function deleteStudentFromSupabase(info){
 }
 async function syncAttendanceToSupabase(c,n,d,record,notify=true){
   try{
+    if(!teacherPin()||!teacherName()){openTeacherModal(true);toast('Identifícate con tu PIN antes de registrar asistencia.');return}
     const payload=attendancePayload(c,n,d,record);
     payload.notify=notify;
     const result=await notifyBackend('attendance',payload);
@@ -276,14 +329,17 @@ async function syncObservationToSupabase(record){
     toast(result.message||'Registro guardado.');
   }catch(err){toast(err.message||'Observación local. No se pudo sincronizar con Supabase.')}
 }
-function teacherPin(){return sessionStorage.getItem(STORAGE_PIN)||''}
+function teacherSessionExpired(){const t=Number(sessionStorage.getItem(STORAGE_TEACHER_TIME)||0); return !t || Date.now()-t>TEACHER_IDLE_LIMIT}
+function clearTeacherSession(){sessionStorage.removeItem(STORAGE_PIN); sessionStorage.removeItem(STORAGE_TEACHER); sessionStorage.removeItem(STORAGE_TEACHER_TIME)}
+function touchTeacherSession(){if(sessionStorage.getItem(STORAGE_PIN))sessionStorage.setItem(STORAGE_TEACHER_TIME,String(Date.now()))}
+function teacherPin(){if(sessionStorage.getItem(STORAGE_PIN)&&teacherSessionExpired()){clearTeacherSession();updateTeacherWelcome();toast('La sesión docente venció por inactividad. Identifícate nuevamente.');openTeacherModal(true);return ''}const pin=sessionStorage.getItem(STORAGE_PIN)||''; if(pin)touchTeacherSession(); return pin}
 function teacherName(){return sessionStorage.getItem(STORAGE_TEACHER)||TEACHER_BY_PIN[teacherPin()]||''}
 function friendlyTeacherName(name){const clean=String(name||'').trim().replace(/\s+/g,' '); if(!clean)return 'profe'; const parts=clean.split(' '); return parts.length>2?parts.slice(-2).join(' '):clean}
 function updateTeacherWelcome(){const box=get('teacherWelcome'); const name=teacherName(); if(box){box.textContent=name?'Bienvenida/o, profe '+friendlyTeacherName(name):''; box.classList.toggle('visible',!!name)} if(get('segDocente'))get('segDocente').value=name||''}
 function openTeacherModal(required=false){window.teacherSessionRequired=!!required; get('teacherModal').classList.add('open'); setTimeout(()=>get('teacherPinInput').focus(),50)}
 function closeTeacherModal(){if(window.teacherSessionRequired&&!teacherPin()){toast('Identifícate para iniciar la sesión.');return} get('teacherModal').classList.remove('open')}
-async function saveTeacherPin(){const pin=get('teacherPinInput').value.trim(); if(!pin){toast('Ingrese el PIN docente.');return} sessionStorage.setItem(STORAGE_PIN,pin); const name=TEACHER_BY_PIN[pin]||''; if(name)sessionStorage.setItem(STORAGE_TEACHER,name); else sessionStorage.removeItem(STORAGE_TEACHER); try{toast('Validando docente y cargando datos...'); await loadSupabaseData(pin);}catch(err){sessionStorage.removeItem(STORAGE_PIN); if(!name)sessionStorage.removeItem(STORAGE_TEACHER); toast(err.message||'PIN no valido o Supabase no responde.');return} window.teacherSessionRequired=false; get('teacherPinInput').value=''; closeTeacherModal(); updateTeacherWelcome(); toast('Bienvenida/o, profe '+friendlyTeacherName(teacherName()||name))}
-function resetTeacherPin(){sessionStorage.removeItem(STORAGE_PIN); sessionStorage.removeItem(STORAGE_TEACHER); if(get('teacherPinInput'))get('teacherPinInput').value=''; updateTeacherWelcome(); toast('Sesión docente cerrada.'); openTeacherModal(true)}
+async function saveTeacherPin(){const pin=get('teacherPinInput').value.trim(); if(!pin){toast('Ingrese el PIN docente.');return} sessionStorage.setItem(STORAGE_PIN,pin); sessionStorage.setItem(STORAGE_TEACHER_TIME,String(Date.now())); const name=TEACHER_BY_PIN[pin]||''; if(name)sessionStorage.setItem(STORAGE_TEACHER,name); else sessionStorage.removeItem(STORAGE_TEACHER); try{toast('Validando docente y cargando datos...'); await loadSupabaseData(pin);}catch(err){clearTeacherSession(); toast(err.message||'PIN no valido o Supabase no responde.');return} window.teacherSessionRequired=false; get('teacherPinInput').value=''; closeTeacherModal(); updateTeacherWelcome(); toast('Bienvenida/o, profe '+friendlyTeacherName(teacherName()||name))}
+function resetTeacherPin(){clearTeacherSession(); if(get('teacherPinInput'))get('teacherPinInput').value=''; updateTeacherWelcome(); toast('Sesión docente cerrada.'); openTeacherModal(true)}
 function ensureTeacherSession(){if(!teacherPin())openTeacherModal(true)}
 function postToBackend(payload){
   toast('El envío directo a Apps Script fue reemplazado por notify.');
@@ -294,15 +350,15 @@ function submitBackendWindow(payload){
   return true;
 }
 function installWhatsAppButton(){
-  const emailBtn=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Reintentar correo');
+  const emailBtn=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Enviar correo');
   if(!emailBtn||document.getElementById('whatsappObsBtn'))return;
   const btn=document.createElement('button');
-  btn.id='whatsappObsBtn'; btn.className='btn btn-success'; btn.type='button'; btn.textContent='Reintentar WhatsApp'; btn.onclick=sendWhatsApp;
+  btn.id='whatsappObsBtn'; btn.className='btn btn-success'; btn.type='button'; btn.textContent='Enviar WhatsApp'; btn.onclick=sendWhatsApp;
   emailBtn.insertAdjacentElement('afterend',btn);
 }
 function attendancePayload(c,n,d,record){
   const s=findStudent(c,n)||{};
-  return {action:'attendance',fecha:d,curso:c,estudiante:n,estado:record.a||'asiste',uniforme:record.u||'',correo:s.correo||'',telefono:s.telefono||'',acudiente:s.acudiente||''}
+  return {action:'attendance',fecha:d,curso:c,estudiante:n,estado:record.a||'asiste',uniforme:record.u||'',correo:s.correo||'',telefono:s.telefono||'',acudiente:s.acudiente||'',docente:teacherName()}
 }
 function notifyAttendanceIfNeeded(c,n,d,previous,next){
   return;
@@ -346,7 +402,7 @@ function toggleAllFollowup(mark){document.querySelectorAll('#segStudentList inpu
 function academicEmailText(r){return `Cordial saludo.\n\nEl Colegio República de China I.E.D. informa que el/la estudiante ${r.estudiante}, del curso ${r.curso}, registra desempeño bajo en la asignatura ${r.asignatura} durante el periodo ${r.periodo}.\n\n${r.recomendacion||''}\n\nRegistro realizado por: ${r.docente}.\n\nColegio República de China I.E.D.`}
 async function saveAcademicFollowups(){
   const pin=teacherPin();if(!pin){openTeacherModal(true);toast('Identifícate con tu PIN.');return}
-  const periodo=Number(get('segPeriodo').value),curso=get('segCurso').value,asignatura=get('segAsignatura').value,recomendacion=get('segRecomendacion').value.trim();
+  const periodo=Number(get('segPeriodo').value),curso=get('segCurso').value,asignatura=get('segAsignatura').value,recomendacion='';
   const names=selectedFollowupStudents();if(!asignatura||!curso||!names.length){alert('Selecciona periodo, asignatura, curso y al menos un estudiante.');return}
   const selected=names.map(n=>{const x=findStudent(curso,n)||{};return {estudiante:n,acudiente:x.acudiente||'',correo:x.correo||'',telefono:x.telefono||''}});
   const btn=get('segSaveButton');btn.disabled=true;btn.textContent='Guardando...';
@@ -372,7 +428,7 @@ function exportCSV(name, headers, rows){const csv='\ufeff'+headers.join(',')+'\n
 function exportStudentsCSV(){exportCSV('estudiantes_crc.csv',['curso','num','nombre','acudiente','parentesco','correo','telefono','discapacidad','apoyo','direccion','convive'],allStudents())} function exportObservationsCSV(){exportCSV('observador_crc.csv',['fecha','curso','estudiante','docente','tipo','categoria','correo','telefono','descripcion','descargos','seguimiento'],observations())}
 function exportAttendanceCSV(){const c=activeCourse, selected=get('fechaAsis').value, dates=window.innerWidth<=720?[selected]:weekdayDatesFrom(selected), rows=[]; (students[c]||[]).forEach(s=>dates.forEach(d=>{const r=getAtt(c,s.nombre,d); rows.push({fecha:d,curso:c,num:s.num,nombre:s.nombre,asistencia:r.a,uniforme:r.u,correo:s.correo,acudiente:s.acudiente})})); exportCSV(`asistencia_${c}_${selected}.csv`,['fecha','curso','num','nombre','asistencia','uniforme','correo','acudiente'],rows)}
 function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))} function escapeJs(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")} function toast(msg){const t=get('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(window._toast); window._toast=setTimeout(()=>t.classList.remove('show'),2600)}
-document.addEventListener('DOMContentLoaded',()=>{loadStudentsData(); get('fechaObs').value=today(); get('fechaAsis').value=today(); populateSelects(); prepareFollowupSelectors(); renderFollowupStudents(); loadCategories(); updatePreview(); renderStudentsMini(); renderAttendance(); renderHistory(); clearStudentEditor(); installWhatsAppButton(); updateTeacherWelcome(); if(teacherPin())loadSupabaseData(teacherPin()).then(()=>{prepareFollowupSelectors();renderFollowupStudents();}).catch(()=>toast('No se pudo actualizar desde Supabase. Se muestra la copia local.')); ensureTeacherSession();});
+document.addEventListener('DOMContentLoaded',()=>{['click','keydown','change','touchstart'].forEach(evt=>document.addEventListener(evt,touchTeacherSession,{passive:true}));loadStudentsData(); get('fechaObs').value=today(); get('fechaAsis').value=today(); populateSelects(); prepareFollowupSelectors(); renderFollowupStudents(); loadCategories(); updatePreview(); renderStudentsMini(); renderAttendance(); renderHistory(); clearStudentEditor(); installWhatsAppButton(); updateTeacherWelcome(); if(teacherPin())loadSupabaseData(teacherPin()).then(()=>{prepareFollowupSelectors();renderFollowupStudents();}).catch(()=>toast('No se pudo actualizar desde Supabase. Se muestra la copia local.')); ensureTeacherSession();});
 </script>
 </body>
 </html>
