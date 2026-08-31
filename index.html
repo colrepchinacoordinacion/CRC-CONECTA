@@ -110,17 +110,21 @@ body[data-view="gestionAcademica"] #academicStats{display:block;border-top:1px s
 /* Gestión académica: franja superior de máxima densidad. */
 body[data-view="gestionAcademica"] .academic-action-strip{display:flex;align-items:center;gap:4px;margin:4px 0 3px;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;padding-bottom:1px}
 body[data-view="gestionAcademica"] .academic-action-strip .academic-toolbar{display:flex;grid-template-columns:none;flex:0 0 auto;flex-wrap:nowrap;align-items:center;gap:4px;margin:0}
-body[data-view="gestionAcademica"] .academic-action-strip .academic-toolbar .btn{width:auto!important;min-width:max-content;min-height:24px;padding:3px 7px;font-size:8.5px;font-weight:500;line-height:1.1;border-radius:6px}
-body[data-view="gestionAcademica"] .academic-action-strip .academic-sync{width:auto!important;min-width:max-content;min-height:20px;margin:0 0 0 1px!important;padding:2px 6px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #d7e1ec;background:#f4f7fa;color:#5d6d7e;font-size:8px;font-weight:400;line-height:1;border-radius:999px}
+body[data-view="gestionAcademica"] .academic-action-strip .academic-toolbar .btn{width:auto!important;min-width:max-content;min-height:26px;padding:4px 8px;font-size:9.5px;font-weight:500;line-height:1.1;border-radius:6px}
+body[data-view="gestionAcademica"] .academic-action-strip .academic-sync{width:auto!important;min-width:max-content;min-height:22px;margin:0 0 0 1px!important;padding:3px 7px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #d7e1ec;background:#f4f7fa;color:#5d6d7e;font-size:9px;font-weight:400;line-height:1;border-radius:999px}
 body[data-view="gestionAcademica"] .academic-action-strip .academic-sync.pending{border-color:#ead8aa;background:#fbf5e7;color:#775b25}
 body[data-view="gestionAcademica"] .academic-action-strip .academic-sync.ok{border-color:#b8ddc5;background:#eaf7ee;color:#23613a}
 body[data-view="gestionAcademica"] .academic-action-strip .academic-sync.error{border-color:#efc1bc;background:#fcefed;color:#8d3129}
 body[data-view="gestionAcademica"] .academic-action-strip .academic-legend{display:flex!important;grid-template-columns:none!important;flex:0 0 auto;flex-wrap:nowrap;align-items:center;gap:3px;margin:0}
-body[data-view="gestionAcademica"] .academic-action-strip .academic-legend span{min-width:max-content;padding:3px 6px;font-size:8px;font-weight:400;line-height:1.1;border-radius:999px;text-align:center}
+body[data-view="gestionAcademica"] .academic-action-strip .academic-legend span{min-width:max-content;padding:4px 7px;font-size:9px;font-weight:400;line-height:1.1;border-radius:999px;text-align:center}
 body[data-view="gestionAcademica"] #academicStats{min-height:18px;margin:2px 0 3px;padding:2px 5px;border-color:#e2e8f0;background:#fcfdff}
-body[data-view="gestionAcademica"] .academic-summary-line{display:flex;flex-wrap:nowrap;align-items:center;gap:10px;overflow-x:auto;white-space:nowrap;color:#64748b;font-size:8px;line-height:1.1;scrollbar-width:thin}
-body[data-view="gestionAcademica"] .academic-summary-line strong{margin-left:2px;color:#334155;font-size:8.5px;font-weight:500}
+body[data-view="gestionAcademica"] .academic-summary-line{display:flex;flex-wrap:nowrap;align-items:center;gap:11px;overflow-x:auto;white-space:nowrap;color:#64748b;font-size:9px;line-height:1.15;scrollbar-width:thin}
+body[data-view="gestionAcademica"] .academic-summary-line strong{margin-left:2px;color:#334155;font-size:9.5px;font-weight:500}
 body[data-view="gestionAcademica"] .academic-table-wrap{max-height:calc(100dvh - 218px)}
+body[data-view="gestionAcademica"] .academic-table th{border-right-color:rgba(255,255,255,.42)}
+body[data-view="gestionAcademica"] .academic-table thead tr:nth-child(2) th{border-right:1px solid #b8c5d4;border-bottom:1px solid #aebdce}
+body[data-view="gestionAcademica"] .academic-table tbody td{border-right:1px solid #bdc9d8;border-bottom:1px solid #cbd5e1}
+body[data-view="gestionAcademica"] .academic-table tbody tr:last-child td{border-bottom:0}
 @media(max-width:720px){body[data-view="gestionAcademica"] .academic-action-strip{margin:3px 0 2px}body[data-view="gestionAcademica"] #academicStats{margin:1px 0 2px}body[data-view="gestionAcademica"] .academic-table-wrap{max-height:calc(100dvh - 246px)}}
 </style>
 
