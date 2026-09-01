@@ -212,7 +212,7 @@ const CATEGORIES={'Observación general':['Reconocimiento positivo','Seguimiento
 const ACADEMIC_SUBJECTS=['FÍSICA','QUÍMICA','MATEMÁTICAS','TECNOLOGÍA E INFORMÁTICA','INGLÉS','ESPAÑOL','FILOSOFÍA','ARTES','EDUCACIÓN FÍSICA','ÉTICA Y RELIGIÓN','CIENCIAS POLÍTICAS Y ECONÓMICAS','CIENCIAS NATURALES','CIENCIAS SOCIALES','EMPRENDIMIENTO','CIENCIAS INTEGRADAS'];
 let followupHistory={resumen:[],detalle:[]}, inclusionStudents=[], inclusionLoaded=false;
 const ACADEMIC_GRADE_CATEGORIES={hetero:{label:'Heteroevaluación',weight:.50},trimestral:{label:'Evaluación trimestral',weight:.20},coevaluacion:{label:'Coevaluación',weight:.15},autoevaluacion:{label:'Autoevaluación',weight:.15}};
-let academicAssignments=[],academicCurrent=null,academicRoster=[],academicColumns=[],academicGrades={},academicColumnCounter=0,academicEditingColumnId=null,academicSaveTimer=null,academicLoading=false;
+let academicAssignments=[],academicCurrent=null,academicRoster=[],academicColumns=[],academicGrades={},academicColumnCounter=0,academicEditingColumnId=null,academicSaveTimer=null,academicLoading=false,academicOwner='',academicLoadVersion=0;
 let students={}, activeCourse='', selectedStudentKey='', currentUserRole='docente', studentTransferSource=null;
 function get(id){return document.getElementById(id)} function today(){return new Date().toISOString().split('T')[0]} function norm(t){return String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/gi,' ').trim().toUpperCase()}
 function toggleMobileMenu(force){document.body.classList.toggle('mobile-nav-open',force===undefined?!document.body.classList.contains('mobile-nav-open'):!!force)}
@@ -497,7 +497,7 @@ async function syncObservationToSupabase(record){
   }catch(err){toast(err.message||'Observación local. No se pudo sincronizar con Supabase.')}
 }
 function teacherSessionExpired(){const t=Number(sessionStorage.getItem(STORAGE_TEACHER_TIME)||0); return !t || Date.now()-t>TEACHER_IDLE_LIMIT}
-function clearTeacherSession(){sessionStorage.removeItem(STORAGE_PIN);sessionStorage.removeItem(STORAGE_TEACHER);sessionStorage.removeItem(STORAGE_TEACHER_ROLE);sessionStorage.removeItem(STORAGE_TEACHER_TIME);currentUserRole='docente';applyStudentRolePermissions()}
+function clearTeacherSession(){sessionStorage.removeItem(STORAGE_PIN);sessionStorage.removeItem(STORAGE_TEACHER);sessionStorage.removeItem(STORAGE_TEACHER_ROLE);sessionStorage.removeItem(STORAGE_TEACHER_TIME);currentUserRole='docente';applyStudentRolePermissions();resetAcademicManagement('Identifícate para consultar tus planillas','error')}
 function touchTeacherSession(){if(sessionStorage.getItem(STORAGE_PIN))sessionStorage.setItem(STORAGE_TEACHER_TIME,String(Date.now()))}
 function teacherPin(){if(sessionStorage.getItem(STORAGE_PIN)&&teacherSessionExpired()){clearTeacherSession();updateTeacherWelcome();toast('La sesión docente venció por inactividad. Identifícate nuevamente.');openTeacherModal(true);return ''}const pin=sessionStorage.getItem(STORAGE_PIN)||''; if(pin)touchTeacherSession(); return pin}
 function teacherName(){return sessionStorage.getItem(STORAGE_TEACHER)||TEACHER_BY_PIN[teacherPin()]||''}
@@ -505,7 +505,7 @@ function friendlyTeacherName(name){const clean=String(name||'').trim().replace(/
 function updateTeacherWelcome(){const box=get('teacherWelcome'),name=teacherName();if(box){box.textContent=name?`${friendlyTeacherName(name)} · ${roleLabel()}`:'';box.classList.toggle('visible',!!name)}if(get('segDocente'))get('segDocente').value=name||''}
 function openTeacherModal(required=false){window.teacherSessionRequired=!!required; get('teacherModal').classList.add('open'); setTimeout(()=>get('teacherPinInput').focus(),50)}
 function closeTeacherModal(){if(window.teacherSessionRequired&&!teacherPin()){toast('Identifícate para iniciar la sesión.');return} get('teacherModal').classList.remove('open')}
-async function saveTeacherPin(){const pin=get('teacherPinInput').value.trim(); if(!pin){toast('Ingrese el PIN docente.');return} sessionStorage.setItem(STORAGE_PIN,pin); sessionStorage.setItem(STORAGE_TEACHER_TIME,String(Date.now())); const name=TEACHER_BY_PIN[pin]||''; if(name)sessionStorage.setItem(STORAGE_TEACHER,name); else sessionStorage.removeItem(STORAGE_TEACHER); try{toast('Validando docente y cargando datos...'); await loadSupabaseData(pin);}catch(err){clearTeacherSession(); toast(err.message||'PIN no valido o Supabase no responde.');return} window.teacherSessionRequired=false; get('teacherPinInput').value=''; closeTeacherModal(); updateTeacherWelcome(); toast('Bienvenida/o, profe '+friendlyTeacherName(teacherName()||name))}
+async function saveTeacherPin(){const pin=get('teacherPinInput').value.trim(); if(!pin){toast('Ingrese el PIN docente.');return}resetAcademicManagement('Validando asignaciones...','pending');sessionStorage.setItem(STORAGE_PIN,pin); sessionStorage.setItem(STORAGE_TEACHER_TIME,String(Date.now())); const name=TEACHER_BY_PIN[pin]||''; if(name)sessionStorage.setItem(STORAGE_TEACHER,name); else sessionStorage.removeItem(STORAGE_TEACHER); try{toast('Validando docente y cargando datos...');await loadSupabaseData(pin);if(document.body.dataset.view==='gestionAcademica')await loadAcademicManagement(true);}catch(err){clearTeacherSession(); toast(err.message||'PIN no valido o Supabase no responde.');return} window.teacherSessionRequired=false; get('teacherPinInput').value=''; closeTeacherModal(); updateTeacherWelcome(); toast('Bienvenida/o, profe '+friendlyTeacherName(teacherName()||name))}
 function resetTeacherPin(){clearTeacherSession(); if(get('teacherPinInput'))get('teacherPinInput').value=''; updateTeacherWelcome(); toast('Sesión docente cerrada.'); openTeacherModal(true)}
 function ensureTeacherSession(){if(!teacherPin())openTeacherModal(true)}
 function postToBackend(payload){
@@ -590,28 +590,35 @@ function renderFollowupHistory(){
 function exportFollowupHistoryCSV(){const q=norm(get('histSegBuscar')?.value||'');const rows=(followupHistory.resumen||[]).filter(r=>norm(`${r.estudiante} ${r.asignaturas} ${r.docentes||''} ${r.asignaturas_docentes||''}`).includes(q)).map(r=>({estudiante:r.estudiante,curso:r.curso,periodo:r.periodo,cantidad:r.cantidad,asignaturas:r.asignaturas_docentes||r.asignaturas,docentes:r.docentes}));exportCSV('historial_seguimiento_academico.csv',['estudiante','curso','periodo','cantidad','asignaturas','docentes'],rows)}
 
 function setAcademicStatus(text,state=''){const el=get('academicSyncStatus');if(!el)return;el.textContent=text;el.className='academic-sync'+(state?' '+state:'')}
+function setAcademicActionsEnabled(enabled){document.querySelectorAll('#gestionAcademica .academic-toolbar .btn').forEach(button=>button.disabled=!enabled)}
+function resetAcademicManagement(message='Selecciona una planilla asignada.',state=''){academicLoadVersion++;academicLoading=false;clearTimeout(academicSaveTimer);academicSaveTimer=null;academicAssignments=[];academicCurrent=null;academicRoster=[];academicColumns=[];academicGrades={};academicOwner='';const select=get('academicSheetSelect');if(select)select.innerHTML='<option value="">Seleccione una planilla</option>';const box=get('academicGradebook'),stats=get('academicStats');if(box)box.innerHTML=`<div class="empty">${escapeHtml(message)}</div>`;if(stats)stats.innerHTML='';setAcademicActionsEnabled(false);setAcademicStatus(message,state)}
+document.addEventListener('DOMContentLoaded',()=>setAcademicActionsEnabled(false))
 function academicStudentKey(student){return norm(student?.nombre||student||'')}
 function academicAssignmentRoster(assignment){if(!assignment)return[];const stored=Array.isArray(assignment.estudiantes)?assignment.estudiantes:[];return (stored.length?stored:(students[assignment.curso]||[])).map((s,index)=>({num:Number(s?.num)||index+1,nombre:String(s?.nombre||s||'').trim()})).filter(s=>s.nombre)}
 function academicPlanStudents(){return academicCurrent?academicRoster:[]}
 function friendlyAcademicError(err){const message=String(err?.message||'');if(/obtener_gestion_academica|schema cache/i.test(message))return 'La base académica todavía no está instalada en Supabase. Ejecuta el archivo SQL de Gestión académica y después pulsa Actualizar.';return message||'No se pudo cargar Gestión académica.'}
 async function loadAcademicManagement(force=false){
   if(academicLoading)return;const pin=teacherPin();if(!pin){openTeacherModal(true);setAcademicStatus('Identifícate para cargar tus planillas','error');return}
-  if(academicAssignments.length&&!force){renderAcademicGradebook();return}
-  academicLoading=true;setAcademicStatus('Cargando planillas...','pending');
+  const currentTeacher=sessionStorage.getItem(STORAGE_TEACHER)||'';
+  if(academicAssignments.length&&!force&&academicOwner&&norm(academicOwner)===norm(currentTeacher)){renderAcademicGradebook();return}
+  if(academicOwner&&norm(academicOwner)!==norm(currentTeacher))resetAcademicManagement('Consultando asignaciones...','pending');
+  const requestVersion=++academicLoadVersion;academicLoading=true;setAcademicActionsEnabled(false);setAcademicStatus('Cargando planillas...','pending');
   try{
     const period=Number(get('academicPeriod')?.value||1),result=await supabaseRpc('obtener_gestion_academica',{p_pin:pin,p_periodo:period});
+    if(requestVersion!==academicLoadVersion||pin!==(sessionStorage.getItem(STORAGE_PIN)||''))return;
     if(!result||result.ok===false)throw new Error(result?.error||'No se pudieron consultar las planillas.');
+    academicOwner=String(result.docente||currentTeacher).trim();
     academicAssignments=Array.isArray(result.asignaciones)?result.asignaciones:[];
     const select=get('academicSheetSelect'),previous=String(academicCurrent?.id||'');select.innerHTML='<option value="">Seleccione una planilla</option>'+academicAssignments.map(a=>`<option value="${a.id}">Curso ${escapeHtml(a.curso)} - ${escapeHtml(a.asignatura)}</option>`).join('');
     const next=academicAssignments.find(a=>String(a.id)===previous)||academicAssignments[0]||null;
-    if(next){select.value=String(next.id);selectAcademicSheet(next.id)}else{academicCurrent=null;academicRoster=[];academicColumns=[];academicGrades={};get('academicGradebook').innerHTML='<div class="empty">No tienes planillas asignadas para este periodo. Solicita al coordinador que registre tus cursos y asignaturas.</div>';get('academicStats').innerHTML='';setAcademicStatus('Sin planillas asignadas','error')}
-  }catch(err){academicAssignments=[];academicCurrent=null;academicRoster=[];get('academicGradebook').innerHTML=`<div class="empty">${escapeHtml(friendlyAcademicError(err))}</div>`;get('academicStats').innerHTML='';setAcademicStatus('No se pudieron cargar las planillas','error')}
-  finally{academicLoading=false}
+    if(next){select.value=String(next.id);selectAcademicSheet(next.id)}else{academicCurrent=null;academicRoster=[];academicColumns=[];academicGrades={};setAcademicActionsEnabled(false);get('academicGradebook').innerHTML='<div class="empty">Este docente no tiene planillas asignadas para el periodo seleccionado.</div>';get('academicStats').innerHTML='';setAcademicStatus('Sin planillas asignadas')}
+  }catch(err){if(requestVersion!==academicLoadVersion)return;academicAssignments=[];academicCurrent=null;academicRoster=[];academicColumns=[];academicGrades={};academicOwner='';setAcademicActionsEnabled(false);get('academicGradebook').innerHTML=`<div class="empty">${escapeHtml(friendlyAcademicError(err))}</div>`;get('academicStats').innerHTML='';setAcademicStatus('No se pudieron cargar las planillas','error')}
+  finally{if(requestVersion===academicLoadVersion)academicLoading=false}
 }
 function selectAcademicSheet(id){
-  const assignment=academicAssignments.find(a=>String(a.id)===String(id));if(!assignment){academicCurrent=null;academicRoster=[];academicColumns=[];academicGrades={};renderAcademicGradebook();return}
+  const assignment=academicAssignments.find(a=>String(a.id)===String(id));if(!assignment){academicCurrent=null;academicRoster=[];academicColumns=[];academicGrades={};setAcademicActionsEnabled(false);renderAcademicGradebook();return}
   academicCurrent=assignment;academicRoster=academicAssignmentRoster(assignment);academicColumns=Array.isArray(assignment.columnas)?structuredClone(assignment.columnas):[];academicGrades=assignment.calificaciones&&typeof assignment.calificaciones==='object'?structuredClone(assignment.calificaciones):{};
-  academicColumnCounter=academicColumns.reduce((max,c)=>Math.max(max,Number(c.id)||0),0);setAcademicStatus('Planilla cargada','ok');renderAcademicGradebook();
+  academicColumnCounter=academicColumns.reduce((max,c)=>Math.max(max,Number(c.id)||0),0);setAcademicActionsEnabled(true);setAcademicStatus('Planilla cargada','ok');renderAcademicGradebook();
 }
 function academicCategorySubtotal(studentKey,category){
   const cols=academicColumns.filter(c=>c.category===category),g=academicGrades[studentKey]||{},values=cols.map(c=>({value:Number(g[c.id]),weight:Number(c.weight)||0})).filter(x=>Number.isFinite(x.value));
