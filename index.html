@@ -127,6 +127,56 @@ body[data-view="gestionAcademica"] .academic-table thead tr:nth-child(2) th{bord
 body[data-view="gestionAcademica"] .academic-table tbody td{border-right:1px solid #bdc9d8;border-bottom:1px solid #cbd5e1}
 body[data-view="gestionAcademica"] .academic-table tbody tr:last-child td{border-bottom:0}
 @media(max-width:720px){body[data-view="gestionAcademica"] .academic-action-strip{margin:3px 0 2px}body[data-view="gestionAcademica"] #academicStats{margin:1px 0 2px}body[data-view="gestionAcademica"] .academic-table-wrap{max-height:calc(100dvh - 246px)}}
+
+/* CRC Conecta 3.0 — identidad institucional sobria: azul, rojo y blanco */
+:root{
+  --navy:#0b2f57;--navy2:#123f70;--blue:#165f9f;--red:#bd2634;--green:#256b58;
+  --ink:#1f2937;--muted:#667386;--line:#dce3eb;--soft:#f4f7fa;--panel:#fff;--panel2:#f8fafc;
+  --focus:rgba(22,95,159,.14);--shadow:0 14px 38px rgba(11,47,87,.07);--soft-shadow:0 5px 18px rgba(11,47,87,.05)
+}
+body{font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif;font-weight:400;background:#f3f6f9;color:var(--ink);letter-spacing:0}
+strong,b{font-weight:600}
+.shell{background:linear-gradient(135deg,rgba(22,95,159,.025),transparent 38%),#f3f6f9}
+.sidebar{background:linear-gradient(180deg,#0b315b 0%,#0a294c 58%,#081f3a 100%);box-shadow:8px 0 30px rgba(8,31,58,.09);border-right:1px solid rgba(255,255,255,.08)}
+.brand{padding:2px 4px 14px;border-bottom:1px solid rgba(255,255,255,.11)}
+.brand-mark{background:#fff;border:1px solid rgba(255,255,255,.65);border-radius:10px;box-shadow:0 8px 22px rgba(0,0,0,.13)}
+.brand h1{font-size:14px;font-weight:600;letter-spacing:.01em}.brand p{font-weight:400;color:#bed0e2}
+.nav{gap:4px}.nav button{position:relative;min-height:42px;border-radius:7px;padding:8px 10px;color:#d8e5f1;font-size:13px;font-weight:400;transition:background .16s ease,color .16s ease,transform .16s ease}
+.nav button:hover{background:rgba(255,255,255,.075);box-shadow:none;transform:translateX(2px)}
+.nav button.active{background:rgba(255,255,255,.12);box-shadow:none;color:#fff;font-weight:500}
+.nav button.active:before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 3px 3px 0;background:#e14a56}
+.nav .ico,.nav .ico-dashboard,.nav .ico-students,.nav .ico-observer,.nav .ico-attendance,.nav .ico-followup,.nav .ico-history-followup,.nav .ico-history,.nav .ico-academic,.nav .ico-inclusion{width:27px;height:27px;border-radius:7px;background:rgba(255,255,255,.09)!important;color:#f4f8fc!important;font-size:13px;font-weight:500;box-shadow:none}
+.side-select{border-top-color:rgba(255,255,255,.1)}.side-select label{font-size:10px;font-weight:500;letter-spacing:.07em;color:#afc4d8}.side-select select,.side-select input{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.07);font-weight:400}
+.sidebar-card{border-radius:10px;background:rgba(255,255,255,.065);border-color:rgba(255,255,255,.1);box-shadow:none}.sidebar-card strong{font-weight:500}
+.topbar{min-height:62px;background:rgba(255,255,255,.96);border-bottom:2px solid var(--red);box-shadow:0 5px 22px rgba(11,47,87,.06);backdrop-filter:blur(18px)}
+.topbar h2{color:var(--navy);font-size:19px;font-weight:600}.topbar p{color:var(--muted);font-weight:400}
+.topbar .btn-ghost{background:#fff;border-color:#d5dee8;color:var(--navy)}.topbar .btn-primary{background:var(--navy);color:#fff;box-shadow:none}.topbar .teacher-welcome{background:#f3f7fb;border-color:#d6e1ec;color:var(--navy)}
+.mobile-menu-btn{background:#edf3f8;color:var(--navy);font-weight:500}
+.container{background:transparent;padding-top:20px}
+.panel,.metric{border:1px solid #e0e6ed;border-radius:12px;background:#fff;box-shadow:var(--shadow)}
+.panel-head{padding:17px 19px;background:#fff;border-bottom:1px solid #e6ebf0;border-radius:12px 12px 0 0}.panel-head h3{color:var(--navy);font-size:17px;font-weight:600}.panel-head p{color:var(--muted);font-weight:400}
+.panel-body{padding:19px;background:#fff;border-radius:0 0 12px 12px}
+.metric{padding:17px}.metric span{font-size:10px;font-weight:500;letter-spacing:.07em;color:#748194}.metric strong{font-size:25px;font-weight:600;color:var(--navy)}
+label{color:#344054;font-size:12px;font-weight:500;text-transform:none;letter-spacing:.01em}
+select,input,textarea{border:1px solid #d6dee7;border-radius:8px;background:#fff;color:#263445;font-weight:400;transition:border-color .15s ease,box-shadow .15s ease,background .15s ease}
+select:hover,input:hover,textarea:hover{border-color:#b9c7d5}select:focus,input:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--focus)}
+.btn{border-radius:7px;font-weight:500;box-shadow:none;transition:background .15s ease,border-color .15s ease,transform .15s ease,box-shadow .15s ease}.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(11,47,87,.1)}
+.btn-primary{background:var(--navy);color:#fff;box-shadow:none}.btn-primary:hover{background:#124577}.btn-success{background:#fff;color:var(--blue);border:1px solid #9fbcd6}.btn-success:hover{background:#f1f6fa}.btn-ghost{background:#f5f7fa;color:#31465e;border:1px solid #dbe3eb}.btn-danger{background:#fff5f5;color:#a91f2c;border:1px solid #efc7cb}
+.chip{font-weight:500;border:1px solid #dde5ed;background:#f7f9fb}.teacher-welcome{font-weight:500}
+.record,.student-list,.followup-list,.followup-table-wrap,.att-table-wrap,.inclusion-list,.history-overview,.academic-table-wrap{border-color:#dde5ed;border-radius:10px;box-shadow:none}
+.record{border-radius:9px}.record strong,.followup-row strong,.student-row strong,.student-strip strong{font-weight:600;color:var(--navy)}
+.student-row.selected{background:#edf4fa;border-left:3px solid var(--red);padding-left:9px}.student-row.selected strong{color:var(--navy)}
+table{font-size:12.5px}th{background:#eef3f8;color:#40536a;font-size:10.5px;font-weight:600;letter-spacing:.045em}th,td{border-bottom-color:#e7ecf1}td.num,td.name,.inclusion-list td:first-child,.history-overview td:first-child{font-weight:500}
+.desktop-attendance-table thead .sticky-num,.desktop-attendance-table thead .sticky-name{background:#e8eef5;color:#304a65}.desktop-attendance-table .sticky-num{background:#f8fafc}.desktop-attendance-table tbody tr:hover td{background:#f7f9fb}
+.att-tabs{background:#fff}.att-tabs button{font-weight:500;color:#718095}.att-tabs button.active{color:var(--navy);border-bottom-color:var(--red)}
+.inclusion-notice{border-color:#d9e3ec;background:#f6f9fb;color:#495d72}.piar-editor-note{border:1px solid #d8e3ed;background:#f5f8fb;color:#405b76}
+.modal-backdrop{background:rgba(7,30,55,.48)}.modal{border-radius:12px;border-color:#dce4ec;box-shadow:0 24px 70px rgba(7,30,55,.2)}.modal-head{border-top:4px solid var(--red);padding:17px 19px}.modal-head h3{font-weight:600;color:var(--navy)}.modal-close{font-weight:400;background:#f2f5f8;color:#53677d}
+.toast{background:#0b315b;border-left:4px solid var(--red);border-radius:8px;font-weight:400}
+.academic-sync,.academic-legend span,.academic-grade-input,.academic-subtotal,.academic-final,.academic-table .academic-num{font-weight:500}.academic-table .academic-name{font-weight:400}.academic-table thead .academic-num,.academic-table thead .academic-name{background:#183b61}.academic-cat-hetero{background:#315f8c}.academic-cat-trimestral{background:#526a85}.academic-cat-coevaluacion{background:#456b69}.academic-cat-autoevaluacion{background:#8b5d55}
+@media(max-width:1120px) and (min-width:721px){.sidebar{padding:14px 16px}.brand{border-bottom:0;padding-bottom:4px}.nav{display:flex;gap:5px;padding:4px 0 8px;scrollbar-width:thin}.nav button{flex:0 0 auto;min-width:max-content}.topbar{min-height:58px}.container{padding:16px}.layout{grid-template-columns:1fr}.panel-head{align-items:center}.inclusion-toolbar{align-items:end}.inclusion-list,.history-overview,.academic-table-wrap,.att-table-wrap{max-width:calc(100vw - 32px);overflow:auto;-webkit-overflow-scrolling:touch}.modal{width:min(90vw,900px)}}
+@media(max-width:900px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.toolbar,.academic-controls{grid-template-columns:1fr 1fr}.inclusion-toolbar>div{min-width:180px}.piar-modal .grid{grid-template-columns:1fr 1fr}.piar-modal .full{grid-column:1/-1}}
+@media(max-width:720px){body{background:#f3f6f9}.sidebar{background:linear-gradient(180deg,#0b315b,#081f3a)}.topbar{background:rgba(255,255,255,.98);border-bottom:2px solid var(--red);box-shadow:0 4px 18px rgba(11,47,87,.07)}.topbar h2{color:var(--navy)}.mobile-menu-btn{background:#edf3f8;color:var(--navy)}.panel{box-shadow:0 5px 18px rgba(11,47,87,.06)}.nav .ico{display:none}.mobile-att-card{border-color:#dde5ed;box-shadow:0 5px 16px rgba(11,47,87,.06)}.container{padding:8px 8px 18px}.grid,.toolbar,.academic-controls,.piar-modal .grid{grid-template-columns:1fr}.full,.piar-modal .full{grid-column:1}.panel-head{align-items:flex-start;flex-direction:column}.panel-head>.actions,.inclusion-toolbar .actions{width:100%}.inclusion-toolbar{display:grid;grid-template-columns:1fr;width:100%}.inclusion-toolbar>div{min-width:0}.inclusion-toolbar .btn{width:100%;min-height:42px}.inclusion-list,.history-overview,.academic-table-wrap,.followup-table-wrap{max-width:calc(100vw - 32px);overflow:auto;-webkit-overflow-scrolling:touch}.modal-backdrop{padding:8px}.modal,.piar-modal .modal{width:100%;max-height:96dvh;border-radius:10px}.modal-head{position:sticky;top:0;z-index:5;background:#fff}.modal-body{padding:14px}.piar-modal textarea{min-height:92px}.btn{min-height:42px}.actions{width:100%}.actions .btn{flex:1 1 140px}}
+@media(max-width:420px){.topbar h2{font-size:15px}.panel-head h3{font-size:15px}.panel-body{padding:12px!important}.metrics{grid-template-columns:1fr}.btn-small{font-size:11px}.inclusion-list table{min-width:900px}.piar-actions{display:grid}.piar-actions .btn{width:100%}}
 </style>
 
 </head>
